@@ -21,6 +21,14 @@ def load_data(data_url):
     # Additional checks based on error message
     if "Expected 1 fields in line 40, saw 23" in str(e):
       st.error("Specific error on line 40: Check for extra commas or incorrect formatting.")
+    # Try different delimiters
+    for delimiter in ["\t", ";"]:
+      try:
+        df = pd.read_csv(data_url, delimiter=delimiter)
+        return df
+      except pd.errors.ParserError:
+        continue  # If one delimiter fails, try the next
+    st.error("Error parsing CSV with different delimiters. Please check CSV format.")
     return None
   except Exception as e:
     st.error(f"An unexpected error occurred: {e}")
@@ -30,11 +38,6 @@ def load_data(data_url):
 df = load_data("https://github.com/anish045007/RWAP_5/blob/main/output_male_football_player.csv")
 if df is None:
   st.stop()
-
-# Troubleshooting Steps (Before proceeding):
-# 1. Manually inspect line 40 of your CSV file. Look for extra commas, missing values, or incorrect formatting.
-# 2. If your CSV uses a different delimiter than a comma, specify it in `pd.read_csv`:
-#     df = pd.read_csv(data_url, delimiter='\t')  # Replace with your actual delimiter
 
 # Sidebar for filters
 st.sidebar.header("Filter Players")
@@ -67,7 +70,7 @@ country_data = df.groupby('nationality_id')[metrics].mean().reset_index()
 st.dataframe(country_data)
 
 fig, ax = plt.subplots(figsize=(12, 6))
-sns.barplot(x='nationality_id', y='overall_mmnorm', data=country_data, ax=ax)  # Fixed the missing closing quotation mark
+sns.barplot(x='nationality_id', y='overall_mmnorm', data=country_data, ax=ax)
 ax.set_title("Overall Performance by Country")
 st.pyplot(fig)
 
