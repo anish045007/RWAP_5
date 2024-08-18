@@ -60,7 +60,6 @@ st.subheader("Player Statistics")
 
 # Visualizations
 st.subheader("Performance Visualizations")
-# Create and display charts
 
 # Country-wise analysis
 st.subheader("Country-wise Analysis")
@@ -68,10 +67,7 @@ country_data = df.groupby('nationality_id')[metrics].mean().reset_index()
 st.dataframe(country_data)
 
 fig, ax = plt.subplots(figsize=(12, 6))
-sns.barplot(x='nationality_id', y='overall
-
-fig, ax = plt.subplots(figsize=(12, 6))
-sns.barplot(x='nationality_id', y='overall_mmnorm', data=country_data, ax=ax)
+sns.barplot(x='nationality_id', y='overall_mmnorm', data=country_data, ax=ax)  # Fixed the missing closing quotation mark
 ax.set_title("Overall Performance by Country")
 st.pyplot(fig)
 
