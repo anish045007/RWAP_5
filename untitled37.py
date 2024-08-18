@@ -3,40 +3,28 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# Initialize Streamlit app
-st.set_page_config(layout="wide")
-
-# Provide the URL to your CSV file on GitHub
-data_url = "https://github.com/anish045007/RWAP_5/blob/main/output_male_football_player.csv"
-
 def load_data(data_url):
-  """Loads data from the specified URL, handling potential errors.
+  # ... (same as previous response)
 
-  Args:
-    data_url: The URL of the CSV file.
-
-  Returns:
-    A pandas DataFrame if successful, otherwise None.
-  """
-
-  try:
-    df = pd.read_csv(data_url)
-    return df
-  except pd.errors.ParserError as e:
-    st.error(f"Error parsing CSV: {e}")
-    return None
-  except Exception as e:
-    st.error(f"An unexpected error occurred: {e}")
-    return None
-
-# Load your dataset
-df = load_data(data_url)
-
+# Load data
+df = load_data("https://github.com/anish045007/RWAP_5/blob/main/output_male_football_player.csv")
 if df is None:
-  st.stop()  # Stop the app if data loading failed
+  st.stop()
 
-# Dashboard Title
+# Sidebar for filters
+st.sidebar.header("Filter Players")
+# Add filter options here
+
+# Dashboard title
 st.title("Football Player Performance Dashboard")
+
+# Player statistics
+st.subheader("Player Statistics")
+# Display selected player statistics
+
+# Visualizations
+st.subheader("Performance Visualizations")
+# Create and display charts
 
 # Sidebar for filters
 st.sidebar.header("Filter Players")
