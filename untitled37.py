@@ -4,7 +4,18 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 def load_data(data_url):
-  # ... (same as previous response)
+  try:
+    df = pd.read_csv(data_url)
+    return df
+  except pd.errors.ParserError as e:
+    st.error(f"Error parsing CSV: {e}")
+    # Additional checks based on error message
+    if "Expected 1 fields in line 40, saw 23" in str(e):
+      st.error("Specific error on line 40: Check for extra commas or incorrect formatting.")
+    return None
+  except Exception as e:
+    st.error(f"An unexpected error occurred: {e}")
+    return None
 
 # Load data
 df = load_data("https://github.com/anish045007/RWAP_5/blob/main/output_male_football_player.csv")
