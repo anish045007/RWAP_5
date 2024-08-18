@@ -3,18 +3,18 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-def load_data(data_url):
-  """Loads data from the specified URL, handling potential errors.
+def load_data(data_file):
+  """Loads data from an uploaded file, handling potential errors.
 
   Args:
-    data_url: The URL of the CSV file.
+    data_file: The uploaded file object.
 
   Returns:
     A pandas DataFrame if successful, otherwise None.
   """
 
   try:
-    df = pd.read_csv(data_url)
+    df = pd.read_csv(data_file)
     # Check if 'league_id' column exists after loading
     if 'league_id' not in df.columns:
       st.error("Error: 'league_id' column not found in the CSV file.")
@@ -28,64 +28,64 @@ def load_data(data_url):
     st.error(f"An unexpected error occurred: {e}")
     return None
 
-# Load data with error handling
-df = load_data("https://github.com/anish045007/RWAP_5/blob/main/output_male_football_player.csv")
-if df is None:
-  st.stop()
+# File uploader
+uploaded_file = st.file_uploader("Upload your CSV file")
 
-# Sidebar for filters
-st.sidebar.header("Filter Players")
-try:
+if uploaded_file is not None:
+  df = load_data(uploaded_file)
+  if df is None:
+    st.stop()
+
+  # Sidebar for filters
+  st.sidebar.header("Filter Players")
   selected_league = st.sidebar.selectbox("Select League", df['league_id'].unique())
-except KeyError:
-  # Handle the case where 'league_id' is not found (already checked in load_data)
-  st.error("Error: 'league_id' column not found.")
-  st.stop()
-selected_club = st.sidebar.selectbox("Select Club", df[df['league_id'] == selected_league]['club_team_id'].unique())
-selected_position = st.sidebar.selectbox("Select Position", df['club_position_oe'].unique())
+  selected_club = st.sidebar.selectbox("Select Club", df[df['league_id'] == selected_league]['club_team_id'].unique())
+  selected_position = st.sidebar.selectbox("Select Position", df['club_position_oe'].unique())
 
-# Filter the dataframe
-filtered_df = df[(df['league_id'] == selected_league) &
-                 (df['club_team_id'] == selected_club) &
-                 (df['club_position_oe'] == selected_position)]
+  # Filter the dataframe
+  filtered_df = df[(df['league_id'] == selected_league) &
+                   (df['club_team_id'] == selected_club) &
+                   (df['club_position_oe'] == selected_position)]
 
-# Display the filtered dataframe
-st.header(f"Player Statistics for {selected_club} in {selected_league}")
-st.write(filtered_df)
+  # Display the filtered dataframe
+  st.header(f"Player Statistics for {selected_club} in {selected_league}")
+  st.write(filtered_df)
 
-# Dashboard title
-st.title("Football Player Performance Dashboard")
+  # Dashboard title
+  st.title("Football Player Performance Dashboard")
 
-# Player statistics
-st.subheader("Player Statistics")
-# Display selected player statistics
+  # Player statistics
+  st.subheader("Player Statistics")
+  # Display selected player statistics (e.g., using st.write or other visualization components)
 
-# Visualizations
-st.subheader("Performance Visualizations")
+  # Visualizations
+  st.subheader("Performance Visualizations")
+  # Create and display charts (e.g., using st.bar_chart, st.line_chart, etc.)
 
-# Country-wise analysis
-st.subheader("Country-wise Analysis")
-country_data = df.groupby('nationality_id')[metrics].mean().reset_index()
-st.dataframe(country_data)
+  # Country-wise analysis
+  st.subheader("Country-wise Analysis")
+  country_data = df.groupby('nationality_id')[metrics].mean().reset_index()
+  st.dataframe(country_data)
 
-fig, ax = plt.subplots(figsize=(12, 6))
-sns.barplot(x='nationality_id', y='overall_mmnorm', data=country_data, ax=ax)
-ax.set_title("Overall Performance by Country")
-st.pyplot(fig)
+  fig, ax = plt.subplots(figsize=(12, 6))
+  sns.barplot(x='nationality_id', y='overall_mmnorm', data=country_data, ax=ax)
+  ax.set_title("Overall Performance by Country")
+  st.pyplot(fig)
 
-# Individual Player Analysis
-st.subheader("Individual Player Analysis")
-selected_player = st.selectbox("Select Player", filtered_df.index)
-player_data = filtered_df.loc[selected_player]
-st.write(player_data)
+  # Individual Player Analysis
+  st.subheader("Individual Player Analysis")
+  selected_player = st.selectbox("Select Player", filtered_df.index)
+  player_data = filtered_df.loc[selected_player]
+  st.write(player_data)
 
-# Suggestions for Improvement
-st.subheader("Suggestions for Improvement")
-improvement_areas = ['weak_foot', 'skill_moves', 'international_reputation',
-                      'attacking_crossing_mmnorm', 'mentality_vision_mmnorm']
-st.write(player_data[improvement_areas])
+  # Suggestions for Improvement
+  st.subheader("Suggestions for Improvement")
+  improvement_areas = ['weak_foot', 'skill_moves', 'international_reputation',
+                        'attacking_crossing_mmnorm', 'mentality_vision_mmnorm']
+  st.write(player_data[improvement_areas])
 
-# Conclusion
-st.markdown("""
-### Conclusion
-This dashboard allows managers to gain insights into the performance of players across various metrics.""")
+  # Conclusion
+  st.markdown("""
+  ### Conclusion
+  This dashboard allows managers to gain insights into the performance of players across various metrics. The country-wise analysis helps in comparing players on a global scale, while the individual analysis aids in tracking and improving specific players' skills.
+  """)
