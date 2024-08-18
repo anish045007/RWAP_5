@@ -68,6 +68,9 @@ country_data = df.groupby('nationality_id')[metrics].mean().reset_index()
 st.dataframe(country_data)
 
 fig, ax = plt.subplots(figsize=(12, 6))
+sns.barplot(x='nationality_id', y='overall
+
+fig, ax = plt.subplots(figsize=(12, 6))
 sns.barplot(x='nationality_id', y='overall_mmnorm', data=country_data, ax=ax)
 ax.set_title("Overall Performance by Country")
 st.pyplot(fig)
