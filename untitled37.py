@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 # Provide the URL to your CSV file on GitHub
-data_url = "https://raw.githubusercontent.com/anish045007/Streamlit_Dashboard/main/train.csv"
+data_url = "https://github.com/anish045007/RWAP_5/blob/main/output_male_football_player.csv"
 
 # Load your dataset
 try:
