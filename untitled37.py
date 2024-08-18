@@ -88,4 +88,5 @@ st.write(player_data[improvement_areas])
 # Conclusion
 st.markdown("""
 ### Conclusion
-This dashboard allows managers to gain insights into the performance of players across various metrics. The country-
+This dashboard allows managers to gain insights into the performance of players across various metrics. The country-wise analysis helps in comparing players on a global scale, while the individual analysis aids in tracking and improving specific players' skills.
+""")
