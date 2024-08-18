@@ -12,14 +12,13 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-from google.colab import drive
 
-# Mount Google Drive
-drive.mount('/content/drive')
+# Provide the URL to your CSV file on GitHub
+data_url = "https://raw.githubusercontent.com/anish045007/Streamlit_Dashboard/main/train.csv"
 
-# Load the dataset
-file_path = '/content/drive/MyDrive/output_male_football_player.csv'  # Update this path if needed
-df = pd.read_csv(file_path)
+# Load your dataset
+try:
+    df = pd.read_csv(data_url)
 
 # Dashboard Title
 st.title("Football Player Performance Dashboard")
