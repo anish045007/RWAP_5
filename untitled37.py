@@ -13,6 +13,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+# Initialize Streamlit app
+st.set_page_config(layout="wide")
+
 # Provide the URL to your CSV file on GitHub
 data_url = "https://github.com/anish045007/RWAP_5/blob/main/output_male_football_player.csv"
 
