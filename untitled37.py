@@ -9,12 +9,31 @@ st.set_page_config(layout="wide")
 # Provide the URL to your CSV file on GitHub
 data_url = "https://github.com/anish045007/RWAP_5/blob/main/output_male_football_player.csv"
 
-# Load your dataset with error handling
-try:
+def load_data(data_url):
+  """Loads data from the specified URL, handling potential errors.
+
+  Args:
+    data_url: The URL of the CSV file.
+
+  Returns:
+    A pandas DataFrame if successful, otherwise None.
+  """
+
+  try:
     df = pd.read_csv(data_url)
-except pd.errors.ParserError as e:
+    return df
+  except pd.errors.ParserError as e:
     st.error(f"Error parsing CSV: {e}")
-    st.stop()  # Stop the app if there's a parsing error
+    return None
+  except Exception as e:
+    st.error(f"An unexpected error occurred: {e}")
+    return None
+
+# Load your dataset
+df = load_data(data_url)
+
+if df is None:
+  st.stop()  # Stop the app if data loading failed
 
 # Dashboard Title
 st.title("Football Player Performance Dashboard")
