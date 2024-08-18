@@ -15,20 +15,14 @@ def load_data(data_url):
 
   try:
     df = pd.read_csv(data_url)
+    # Check if 'league_id' column exists after loading
+    if 'league_id' not in df.columns:
+      st.error("Error: 'league_id' column not found in the CSV file.")
+      return None
     return df
   except pd.errors.ParserError as e:
     st.error(f"Error parsing CSV: {e}")
-    # Additional checks based on error message
-    if "Expected 1 fields in line 40, saw 23" in str(e):
-      st.error("Specific error on line 40: Check for extra commas or incorrect formatting.")
-    # Try different delimiters
-    for delimiter in ["\t", ";"]:
-      try:
-        df = pd.read_csv(data_url, delimiter=delimiter)
-        return df
-      except pd.errors.ParserError:
-        continue  # If one delimiter fails, try the next
-    st.error("Error parsing CSV with different delimiters. Please check CSV format.")
+    # Additional checks based on error message (if needed)
     return None
   except Exception as e:
     st.error(f"An unexpected error occurred: {e}")
@@ -41,7 +35,12 @@ if df is None:
 
 # Sidebar for filters
 st.sidebar.header("Filter Players")
-selected_league = st.sidebar.selectbox("Select League", df['league_id'].unique())
+try:
+  selected_league = st.sidebar.selectbox("Select League", df['league_id'].unique())
+except KeyError:
+  # Handle the case where 'league_id' is not found (already checked in load_data)
+  st.error("Error: 'league_id' column not found.")
+  st.stop()
 selected_club = st.sidebar.selectbox("Select Club", df[df['league_id'] == selected_league]['club_team_id'].unique())
 selected_position = st.sidebar.selectbox("Select Position", df['club_position_oe'].unique())
 
@@ -89,5 +88,4 @@ st.write(player_data[improvement_areas])
 # Conclusion
 st.markdown("""
 ### Conclusion
-This dashboard allows managers to gain insights into the performance of players across various metrics. The country-wise analysis helps in comparing players on a global scale, while the individual analysis aids in tracking and improving specific players' skills.
-""")
+This dashboard allows managers to gain insights into the performance of players across various metrics. The country-
