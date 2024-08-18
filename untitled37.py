@@ -62,28 +62,6 @@ st.subheader("Player Statistics")
 st.subheader("Performance Visualizations")
 # Create and display charts
 
-# Sidebar for filters
-st.sidebar.header("Filter Players")
-selected_league = st.sidebar.selectbox("Select League", df['league_id'].unique())
-selected_club = st.sidebar.selectbox("Select Club", df[df['league_id'] == selected_league]['club_team_id'].unique())
-selected_position = st.sidebar.selectbox("Select Position", df['club_position_oe'].unique())
-
-# Filter the dataframe
-filtered_df = df[(df['league_id'] == selected_league) &
-                 (df['club_team_id'] == selected_club) &
-                 (df['club_position_oe'] == selected_position)]
-
-# Display the filtered dataframe
-st.header(f"Player Statistics for {selected_club} in {selected_league}")
-st.write(filtered_df)
-
-# Player performance overview
-st.subheader("Player Performance Overview")
-metrics = ['overall_mmnorm', 'potential_mmnorm', 'pace_mmnorm', 'shooting_mmnorm',
-          'passing_mmnorm', 'dribbling_mmnorm', 'defending_mmnorm', 'physic_mmnorm']
-for metric in metrics:
-    st.bar_chart(filtered_df[metric])
-
 # Country-wise analysis
 st.subheader("Country-wise Analysis")
 country_data = df.groupby('nationality_id')[metrics].mean().reset_index()
