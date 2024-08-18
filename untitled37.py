@@ -3,6 +3,12 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+# Initialize Streamlit app
+st.set_page_config(layout="wide")
+
+# Dashboard Title
+st.title("Football Player Performance Dashboard")
+
 def load_data(data_file):
   """Loads data from an uploaded file, handling potential errors.
 
