@@ -10,8 +10,8 @@ The data used in this project is sourced from [Kaggle's Male Football Players Da
 
 ### 1. `RWAP_U`
 This file includes:
-- **Machine Learning Model**: Implements various models for clustering football players.
-- **Regression Model**: Utilizes regression techniques for further analysis and predictions.
+- **Machine Learning Model**: Implements K-Means Machine Learning model for clustering football players.
+- **Regression Model**: Utilizes regression technique for further analysis and predictions.
 
 ### 2. `RWAP_Dash`
 This file contains:
