@@ -1,0 +1,9 @@
+memory_profiler
+pandas
+numpy
+sklearn
+itertools
+scipy
+matplotlib
+plotly
+dash
