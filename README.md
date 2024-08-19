@@ -13,7 +13,7 @@ This file includes:
 - **Machine Learning Model**: Implements various models for clustering football players.
 - **Regression Model**: Utilizes regression techniques for further analysis and predictions.
 
-### 2. `RWAP_dash`
+### 2. `RWAP_Dash`
 This file contains:
 - **Dashboard**: An interactive tool built with Dash to help managers analyze player data. 
 - **Features**: Allows users to explore player statistics and predict future values/acquisition costs.
